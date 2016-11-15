@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+</head>
+<body ng-app="hockeyLiveApp">
+<!--[if lte IE 8]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<!-- Add your site or application content here -->
+<div class="header" ng-controller="headerController">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="max-width navbar-margins">
+            <div class="navbar-header">
+                <div layout="row">
+                    <div id="wrapper">
+                        <div class="overlay"></div>
+                        <!-- Sidebar -->
+                        <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
+                            <ul class="nav sidebar-nav" style="color: white">
+
+                                <li class="sidebar-brand" style="margin-bottom:60px"><a href
+                                                                                        ng-click="home()"><h2>
+                                    HockeyLive</h2></a>
+                                </li>
+                                <li class="active">
+                                    <md-button md-no-ink ng-click="home()">Accueil
+                                </li>
+                                <li>
+                                    <md-button md-no-ink ng-click="aPropos()">A propos</md-button>
+                                </li>
+                                <li>
+                                    <md-content flex layout-padding>
+                                        <h5>Paris en cours : {{listParisEnCours.length}}</h5>
+                                        <ul>
+                                            <li ng-repeat="pari in listParisEnCours track by $index">
+                                                {{pari.nomMatch}} : {{pari.montant}}
+                                            </li>
+                                        </ul>
+                                    </md-content>
+
+                                    <md-content flex layout-padding>
+                                        <h5>Paris terminés : {{listParisTermine.length}}</h5>
+                                        <ul>
+                                            <li ng-repeat="pari in listParisTermine track by $index">
+                                                {{pari.nomMatch}} : {{pari.montant}}
+                                            </li>
+                                        </ul>
+                                    </md-content>
+                                </li>
+                                <li>
+                                    Gain : {{gains}}
+                                </li>
+                            </ul>
+                        </nav>
+                        <!-- /#sidebar-wrapper -->
+                        <!-- Page Content -->
+                        <div id="page-content-wrapper">
+                            <button type="button" class="hamburger is-closed" data-toggle="offcanvas">
+                                <span class="hamb-top"></span>
+                                <span class="hamb-middle"></span>
+                                <span class="hamb-bottom"></span>
+                            </button>
+                        </div>
+                        <!-- /#page-content-wrapper -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div class="container" style="margin-top:85px;">
+    <div ng-view=""></div>
+</div>
+
+<div class="footer">
+    <div class="container">
+        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
+    </div>
+</div>
+
+
+<!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+<script>
+    !function (A, n, g, u, l, a, r) {
+        A.GoogleAnalyticsObject = l, A[l] = A[l] || function () {
+                    (A[l].q = A[l].q || []).push(arguments)
+                }, A[l].l = +new Date, a = n.createElement(g),
+                r = n.getElementsByTagName(g)[0], a.src = u, r.parentNode.insertBefore(a, r)
+    }(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-XXXXX-X');
+    ga('send', 'pageview');
+</script>
+
+<!-- build:js(.) scripts/vendor.js -->
+<!-- bower:js -->
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/angular-aria/angular-aria.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="bower_components/angular-messages/angular-messages.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="bower_components/angular-touch/angular-touch.js"></script>
+<script src="bower_components/angular-material/angular-material.js"></script>
+<script src="bower_components/crypto-js/index.js"></script>
+<script src="bower_components/moment/moment.js"></script>
+<script src="bower_components/angular-dynamic-locale/src/tmhDynamicLocale.js"></script>
+<script src="bower_components/angular-translate/angular-translate.js"></script>
+<script src="bower_components/angular-file-upload/dist/angular-file-upload.min.js"></script>
+<!-- endbower -->
+<!-- endbuild -->
+
+<!-- build:js({.tmp,app}) scripts/scripts.js -->
+<script src="scripts/app.js"></script>
+<script src="scripts/controllers/main.js"></script>
+<script src="scripts/controllers/match.js"></script>
+<script src="scripts/controllers/about.js"></script>
+<script src="scripts/controllers/header.js"></script>
+<script src="scripts/models/_model.js"></script>
+<script src="scripts/models/matchs.js"></script>
+<script src="scripts/models/match.js"></script>
+<script src="scripts/models/paris.js"></script>
+<script src="scripts/directives/matchReview.js"></script>
+<!-- endbuild -->
+</body>
+</html>

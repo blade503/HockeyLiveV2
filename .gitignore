@@ -1,0 +1,4 @@
+Client/.idea/*
+APIV2/app/cache/*
+Client/node_modules/*
+APIV2/vendor/*

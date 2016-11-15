@@ -1,0 +1,57 @@
+<md-dialog aria-label="Search box" id="Pariez.html" ng-cloak flex="80">
+    <form name="form" class="css-form" role="form" novalidate>
+
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Pariez</h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content class="md-padding">
+            <h4>Cote : </h4>
+            <br/>
+            <div layout="row">
+                <div layout="row" flex="25">
+                    <span id="valueWE1" flex><b>1.45</b></span>
+                    <md-checkbox ng-model="ctrl.match.paris.choix[ctrl.match.match.home.name]" ng-click="ctrl.match.updateChoice(ctrl.match.match.home.name)" aria-label="Checkbox 1" style="top: 0 !important" flex>
+                    </md-checkbox>
+                </div>
+
+                <div layout="row" flex>
+                    <span id="valueN" style="text-align: right" flex><b>2</b></span> &nbsp; &nbsp; &nbsp;
+                    <md-checkbox ng-model="ctrl.match.paris.choix.none"ng-click="ctrl.match.updateChoice(none)" aria-label="Checkbox 1"  style="top: 0 !important" flex>
+                    </md-checkbox>
+                </div>
+
+                <div layout="row" flex="25"  >
+                    <span id="valueWE2" flex><b>1.45</b></span>
+                    <md-checkbox ng-model="ctrl.match.paris.choix[ctrl.match.match.away.name]"ng-click="ctrl.match.updateChoice(ctrl.match.match.away.name)"" aria-label="Checkbox 1"  style="top: 0 !important" flex>
+                    </md-checkbox>
+                </div>
+            </div>
+            <md-slider-container>
+                <span>Montant</span>
+                <md-slider flex min="0" max="1000" ng-model="ctrl.match.paris.montant" aria-label="blue">
+                </md-slider>
+                <md-input-container style="max-width: 65px;">
+                    <input flex type="number" ng-model="ctrl.match.paris.montant" aria-label="blue">
+                </md-input-container>
+            </md-slider-container>
+            <br/>
+            <p ng-if="ctrl.match.nonValid">
+                <span style="color: red">Tous les champs ne sont pas correctement remplis</span>
+            </p>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <md-button ng-click="ctrl.match.annuler()">
+                Annuler
+            </md-button>
+            <md-button ng-click="ctrl.match.sauvegarder()" style="margin-right:20px;">
+                Pariez !
+            </md-button>
+        </md-dialog-actions>
+
+    </form>
+</md-dialog>

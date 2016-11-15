@@ -1,0 +1,10 @@
+<div>
+    <md-grid-list
+            md-cols="1"
+            md-row-height-gt-md="1:1" md-row-height="2:2"
+            md-gutter="12px">
+        <p ng-repeat="match in listMatchs track by $index">
+            <match-review match="match" current-path="currentPath"></match-review>
+        </p>
+    </md-grid-list>
+</div>

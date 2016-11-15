@@ -1,0 +1,29 @@
+<md-card>
+    <md-card-title>
+        <md-card-title-text>
+                    <span class="md-headline" layout="row">
+                        <span flex="40" style="font-size: 20px; font-weight: 400;line-height: 26px;">{{match.home.name}}</span>
+                        <span style="text-align: center" flex>{{match.score}}</span>
+                        <span flex="40" style="text-align: right;font-size: 20px; font-weight: 400;line-height: 26px;">{{match.away.name}}</span>
+                    </span>
+            <span class="md-subhead" layout="row">
+                <span flex="25">({{match.home.stats.wins}}:{{match.home.stats.ot}}:{{match.home.stats.losses}})</span>
+                <span style="text-align: right" flex>({{match.away.stats.wins}}:{{match.away.stats.ot}}:{{match.away.stats.losses}})</span>
+            </span>
+        </md-card-title-text>
+    </md-card-title>
+    <md-card-content>
+        <p>
+            Début du match : {{match.startTime | date: 'MMM d, y h:mm '}} <br/>
+            Localisation : {{match.localisation}}
+        </p>
+    </md-card-content>
+    <md-card-actions layout="row" layout-align="end center">
+        <md-button class="md-primary md-raised" ng-disabled="match.status.codedGameState == 1" ng-href="/#/match"
+                   ng-if="currentPath == '/'">En savoir plus
+        </md-button>
+        <md-button class="md-primary md-raised" ng-disabled="match.status.codedGameState == 2" ng-click="pariez()"
+                   ng-if="currentPath == '/match'">Pariez
+        </md-button>
+    </md-card-actions>
+</md-card>
