@@ -35,7 +35,7 @@ class OneMatchController extends Controller
     public function RequestExternalApiForAllMatch(){
         $ch = curl_init();
         $time = date('Y-m-d');
-        curl_setopt($ch, CURLOPT_URL, 'https://statsapi.web.nhl.com/api/v1/schedule?startDate='.$time);
+        curl_setopt($ch, CURLOPT_URL,'https://statsapi.web.nhl.com/api/v1/schedule?startDate='.$time.'&endDate='.$time.'&expand=schedule.linescore');
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json')); // Assuming you're requesting JSON
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $response = curl_exec($ch);
@@ -62,6 +62,7 @@ class OneMatchController extends Controller
             ),
             "localisation" => $games[$idMatch]->venue->name,
             "status" => $games[$idMatch]->status,
+            "linescore" => $games[$idMatch]->linescore,
         );
     }
 
