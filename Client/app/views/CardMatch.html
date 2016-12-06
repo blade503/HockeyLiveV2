@@ -14,13 +14,39 @@
     </md-card-title>
     <md-card-content>
         <p>
-            Début du match : {{match.startTime | date: 'MMM d, y h:mm '}} <br/>
-            Localisation : {{match.localisation}}
+            Début du match : {{match.startTime | date: 'MMM d, y HH:mm '}} <br/>
+            Localisation : {{match.localisation}} <br/>
+            Période en cours : {{match.linescore.currentPeriodOrdinal}}
         </p>
+            <md-table-container ng-if="match && match.linescore">
+                <table md-table md-row-select multiple>
+                    <thead md-head md-order="query.order">
+                    <tr md-row>
+                        <th md-column >Période</th>
+                        <th md-column md-numeric md-order-by="match.linescore.periods[0]"><span>1st</span></th>
+                        <th md-column md-numeric md-order-by="match.linescore.periods[1]"><span>2nd</span></th>
+                        <th md-column md-numeric md-order-by="match.linescore.periods[2]"><span>3rd</span></th>
+                        <th md-column ng-if="match.linescore.periods.length > 3" md-numeric md-order-by="match.linescore.periods[2]"><span>4th</span></th>
+                    </tr>
+                    </thead>
+                    <tbody md-body>
+                    <tr>
+                        <td md-cell style="color: grey; font-weight: bold;">Score</td>
+                        <td md-cell>{{match.linescore.periods[0].home.goals}} : {{match.linescore.periods[0].away.goals}}</td>
+                        <td md-cell>{{match.linescore.periods[1].home.goals}} : {{match.linescore.periods[1].away.goals}}</td>
+                        <td md-cell>{{match.linescore.periods[2].home.goals}} : {{match.linescore.periods[2].away.goals}}</td>
+                        <td md-cell ng-if="match.linescore.periods.length > 3">{{match.linescore.periods[3].home.goals}} : {{match.linescore.periods[3].away.goals}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </md-table-container>
+        <div ng-if="error">
+            <p style="color: red">Vous ne pouvez parier apres la 3e mi-temps</p>
+        </div>
     </md-card-content>
     <md-card-actions layout="row" layout-align="end center">
-        <md-button class="md-primary md-raised" ng-disabled="match.status.codedGameState == 1" ng-href="/#/match"
-                   ng-if="currentPath == '/'">En savoir plus
+        <md-button class="md-primary md-raised" ng-disabled="match.status.codedGameState == 1"
+                   ng-if="currentPath == '/'" ng-click="enSavoirPlus(match.idMatch)">En savoir plus
         </md-button>
         <md-button class="md-primary md-raised" ng-disabled="match.status.codedGameState == 2" ng-click="pariez()"
                    ng-if="currentPath == '/match'">Pariez

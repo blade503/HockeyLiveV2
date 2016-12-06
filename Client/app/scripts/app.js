@@ -21,7 +21,8 @@ angular
         'ngMaterial',
         'pascalprecht.translate',
         'tmh.dynamicLocale',
-        'angularFileUpload'
+        'angularFileUpload',
+        'md.data.table'
     ])
     .config(function ($routeProvider) {
         $routeProvider

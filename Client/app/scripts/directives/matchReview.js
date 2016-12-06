@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hockeyLiveApp')
-    .directive('matchReview', function ($mdDialog, paris, $rootScope) {
+    .directive('matchReview', function ($mdToast, $mdDialog, paris, $rootScope, $location) {
         return {
             restrict: 'E',
             templateUrl: '../../../views/CardMatch.html',
@@ -13,9 +13,16 @@ angular.module('hockeyLiveApp')
                 scope.paris = {};
                 scope.paris.montant = 0;
                 scope.paris.choix = {};
-                console.log(scope.match);
-                scope.paris.choix[scope.match.home.name] = false;
-                scope.paris.choix[scope.match.away.name] = false;
+                scope.affRes = false;
+                scope.$watch(function(){
+                    return scope.match;
+                }, function(){
+                    if(scope.match){
+                        scope.paris.choix[scope.match.home.name] = false;
+                        scope.paris.choix[scope.match.away.name] = false;
+                        scope.affRes = true;
+                    }
+                });
                 scope.paris.choix.none = false;
                 scope.nonValid = false;
                 scope.cotes = [1.45, 2, 1.45];
@@ -29,6 +36,11 @@ angular.module('hockeyLiveApp')
                         scope.paris.montant = 0;
                 });
 
+                scope.enSavoirPlus = function(id){
+                    localStorage.setItem("idMatch", id);
+                    $location.url("/match")
+                };
+
                 scope.updateChoice = function (id) {
                     angular.forEach(scope.paris.choix, function (value, key) {
                         if (key != id) {
@@ -40,15 +52,20 @@ angular.module('hockeyLiveApp')
                 };
 
                 scope.pariez = function () {
-                    $mdDialog.show({
-                        controller: function () {
-                            this.match = scope;
-                        },
-                        controllerAs: "ctrl",
-                        templateUrl: 'views/pariez.html',
-                        parent: angular.element(document.body),
-                        clickOutsideToClose: false
-                    })
+                    if(scope.match.linescore.currentPeriod > 2){
+                        scope.error = true;
+                    }
+                    else {
+                        $mdDialog.show({
+                            controller: function () {
+                                this.match = scope;
+                            },
+                            controllerAs: "ctrl",
+                            templateUrl: 'views/pariez.html',
+                            parent: angular.element(document.body),
+                            clickOutsideToClose: false
+                        })
+                    }
                 };
                 scope.annuler = function () {
                     $mdDialog.hide();
@@ -65,7 +82,6 @@ angular.module('hockeyLiveApp')
                         }
                     });
                     scope.formValid = !(count == 1 && scope.paris.montant > 0);
-                    console.log(scope.formValid)
                 };
                 scope.sauvegarder = function () {
                     var count = 0;
@@ -98,7 +114,12 @@ angular.module('hockeyLiveApp')
 
                         $rootScope.nbParis += 1;
 
-                        console.log(pari);
+                        $mdToast.show(
+                            $mdToast.simple()
+                                .textContent('Pari enregistré!')
+                                .position('bottom right')
+                                .hideDelay(3000)
+                        );
 
                         scope.nonValid = false;
                         $mdDialog.hide();

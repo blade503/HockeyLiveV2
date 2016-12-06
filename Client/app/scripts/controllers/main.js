@@ -11,12 +11,16 @@ angular.module('hockeyLiveApp')
     .controller('MainCtrl', function ($scope, matchs, $location) {
         $scope.listMatchs = [];
         $scope.currentPath = $location.path();
+        if(localStorage.getItem("idMatch"))
+            localStorage.removeItem("idMatch");
         matchs.getAllmatchs(function (data, status) {
+            console.log(data);
             angular.forEach(data.matchs, function(m){
                 $scope.listMatchs.push(new matchs(m));
             });
-            $scope.listMatchs[0].status.codedGameState = 2;
+            //$scope.listMatchs[0].status.codedGameState = 2;
         });
+
         /*var data = {
             "nbMatch": 6,
             "matchs": [
@@ -226,5 +230,42 @@ angular.module('hockeyLiveApp')
                 }
             ]
         };*/
+
+
+
+        {
+            "idMatch": 2016020206,
+            "startTime": "2016-11-12T00:00:00Z",
+            "score": "0:0",
+            "home": {
+            "name": "Buffalo Sabres",
+                "score": 0,
+                "id": 7,
+                "stats": {
+                "wins": 5,
+                    "losses": 5,
+                    "ot": 3,
+                    "type": "league"
+            }
+        },
+            "away": {
+            "name": "New Jersey Devils",
+                "score": 0,
+                "id": 1,
+                "stats": {
+                "wins": 6,
+                    "losses": 3,
+                    "ot": 3,
+                    "type": "league"
+            }
+        },
+            "localisation": "KeyBank Center",
+            "status": {
+            "abstractGameState": "Final",
+                "codedGameState": "7",
+                "detailedState": "Final",
+                "statusCode": "7"
+        }
+        },
 
     });

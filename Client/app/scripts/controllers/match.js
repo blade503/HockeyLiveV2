@@ -8,16 +8,11 @@
  * Controller of the hockeyLiveApp
  */
 angular.module('hockeyLiveApp')
-    .controller('MatchCtrl', function ($scope, match, $location) {
+    .controller('MatchCtrl', function ($scope, match, $location, $timeout, $route) {
         $scope.listMatchs = [];
         $scope.currentPath = $location.path();
-        /*match.getAllMatch(function (data, status) {
-         for (var i = 0; i < data.nbMatch; i++) {
-         listMatchs.add(new match(data.matchs[i]));
-         }
-         console.log(listMatchs)
-         });*/
-        var data2 = {
+
+        /*var data2 = {
             "idMatch": 2016020206,
             "startTime": "2016-11-12T00:00:00Z",
             "score": "0:0",
@@ -50,8 +45,13 @@ angular.module('hockeyLiveApp')
                 "detailedState": "Final",
                 "statusCode": "7"
             }
-        };
+        };*/
+        match.getMatch(localStorage.getItem("idMatch"), function(data, status){
+            $scope.listMatchs.push(new match(data));
+        });
 
-        $scope.listMatchs.push(new match(data2));
+        $timeout(function() {
+            $route.reload();
+        }, 120000);
 
     });

@@ -15,7 +15,8 @@ angular.module('hockeyLiveApp')
                     this.home = element.home,
                     this.away = element.away,
                     this.localisation = element.localisation,
-                    this.status = element.status
+                    this.status = element.status,
+                    this.linescore = element.linescore
             }
         };
 

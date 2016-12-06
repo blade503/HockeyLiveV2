@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hockeyLiveApp')
-    .controller('headerController', function ($rootScope, $scope, $mdToast, $location, $mdMedia, paris, match) {
+    .controller('headerController', function ($rootScope, $scope, $mdToast, $location, $mdMedia, paris, match, $route) {
 
         $scope.userId = localStorage.getItem('userId');
         $scope.listParisEnCours = [];
@@ -25,33 +25,59 @@ angular.module('hockeyLiveApp')
                 if (data.length > 0) {
                     $rootScope.nbParis = data.length;
                     angular.forEach(data, function (pari) {
-                        if (pari.statut == "enCours")
-                            $scope.listParisEnCours.push(pari);
-                        else
-                            $scope.listParisTermine.push(pari);
+                        var ok = true;
+                        angular.forEach($scope.listParisEnCours, function(pec){
+                            if(pari.idMatch == pec.idMatch)
+                                ok = false;
+                        });
+                        if(ok){
+                            if (pari.status != "Final")
+                                $scope.listParisEnCours.push(pari);
+                            else
+                                $scope.listParisTermine.push(pari);
+                        }
+                    });
+
+                    angular.forEach($scope.listParisEnCours, function (pari) {
+                        $scope.gagne = false;
+                        match.getMatch(pari.idMatch, function (data, status) {
+                            if(data.status.codedGameState == 7){
+                                pari.status = 'Termine';
+                                var ok = true;
+                                angular.forEach($scope.listParisTermine, function(pec){
+                                    if(pari.idMatch == pec.idMatch)
+                                        ok = false;
+                                });
+                                if(ok)
+                                    $scope.listParisTermine.push(pari);
+                            }
+                        });
+                        var index = $scope.listParisEnCours.indexOf(pari);
+                        $scope.listParisEnCours.splice(index, 1);
                     });
 
                     angular.forEach($scope.listParisTermine, function (pari) {
                         $scope.gagne = false;
                         match.getMatch(pari.idMatch, function (data, status) {
-                            angular.forEach(data, function (match) {
-                                if (pari.equipe == match.home.name) {
-                                    $scope.gagne = match.home.score > data.away.score;
+                                if (pari.equipe == data.home.name) {
+                                    $scope.gagne = data.home.score > data.away.score;
                                 }
                                 else {
-                                    $scope.gagne = match.away.score > match.home.score;
+                                    $scope.gagne = data.away.score > data.home.score;
                                 }
-                                pari.nomMatch = match.home.name + " - " + match.away.name;
-                            });
+                            if ($scope.gagne) {
+                                $scope.gains += pari.montant;
+                            }
                         });
-                        if ($scope.gagne) {
-                            $scope.gains += montant;
-                        }
                     });
                 }
             });
             $scope.listParisTermine = $scope.listParisTermine.getUnique();
             $scope.listParisEnCours = $scope.listParisEnCours.getUnique();
+        };
+
+        $scope.actualiser = function(){
+            $route.reload();
         };
 
         $scope.$watch(function () {

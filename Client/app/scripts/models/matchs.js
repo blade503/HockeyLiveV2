@@ -9,7 +9,7 @@ angular.module('hockeyLiveApp')
 
             // ---- SCHEMA DEFINITION
             if (element) {
-                this.idMatchs = element.idMatchs,
+                this.idMatch = element.idMatch,
                     this.startTime = element.startTime,
                     this.score = element.score,
                     this.home = element.home,

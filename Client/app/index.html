@@ -10,6 +10,7 @@
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" />
+    <link rel="stylesheet" href="bower_components/angular-material-data-table/dist/md-data-table.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -42,14 +43,14 @@
                                     <md-button md-no-ink ng-click="home()">Accueil
                                 </li>
                                 <li>
-                                    <md-button md-no-ink ng-click="aPropos()">A propos</md-button>
+                                    <md-button md-no-ink ng-click="actualiser()">Actualiser</md-button>
                                 </li>
                                 <li>
                                     <md-content flex layout-padding>
                                         <h5>Paris en cours : {{listParisEnCours.length}}</h5>
                                         <ul>
                                             <li ng-repeat="pari in listParisEnCours track by $index">
-                                                {{pari.nomMatch}} : {{pari.montant}}
+                                                {{pari.equipe}} : {{pari.montant}}
                                             </li>
                                         </ul>
                                     </md-content>
@@ -58,7 +59,7 @@
                                         <h5>Paris terminés : {{listParisTermine.length}}</h5>
                                         <ul>
                                             <li ng-repeat="pari in listParisTermine track by $index">
-                                                {{pari.nomMatch}} : {{pari.montant}}
+                                                {{pari.equipe}} : {{pari.montant}}
                                             </li>
                                         </ul>
                                     </md-content>
@@ -128,6 +129,7 @@
 <script src="bower_components/angular-dynamic-locale/src/tmhDynamicLocale.js"></script>
 <script src="bower_components/angular-translate/angular-translate.js"></script>
 <script src="bower_components/angular-file-upload/dist/angular-file-upload.min.js"></script>
+<script src="bower_components/angular-material-data-table/dist/md-data-table.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
